@@ -40,7 +40,7 @@ describe("HomePage", () => {
   });
 
   it('should have user array', () => {
-    expect(homepage.user).toEqual({});
+    expect(homepage.user).toEqual({ distance: 1000, gender: 'female', age: 20 });
   });
 
   it('should have user array default values', () => {

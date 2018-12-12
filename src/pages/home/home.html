@@ -9,7 +9,7 @@
 
 <ion-content padding>
   <h1>Page One</h1>
-  <ion-list>
+	<ion-list>
     <ion-item>
         <ion-label floating>Distance</ion-label>
         <ion-input type="number" [(ngModel)]="user.distance"></ion-input>
@@ -33,4 +33,12 @@
 </ion-list>
 
 <button block ion-button (click)="calculate()">Calculate</button>
+<ion-card *ngIf="person?.assessmentMessage">
+    <ion-card-header>
+        Cooper Test Results
+    </ion-card-header>
+    <ion-card-content>
+        Gender: {{person?.gender}}, Age: {{person?.age}} <br/> Result: {{person?.assessmentMessage}}
+    </ion-card-content>
+</ion-card>
 </ion-content>

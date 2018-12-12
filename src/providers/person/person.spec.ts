@@ -2,7 +2,6 @@ import { CooperProvider } from './../../providers/cooper/cooper';
 import { PersonProvider } from './../../providers/person/person';
 import { TestBed, inject } from "@angular/core/testing";
 
-
 describe("Person Component", () => {
   let personProvider, cooperProvider;
 

@@ -22,7 +22,7 @@ export class MyApp {
     private _tokenService: Angular2TokenService
   ) {
     this._tokenService.init({
-      apiBase: 'https://your-cooper-api.herokuapp.com/api/v1'
+      apiBase: 'https://mysterious-island-55175.herokuapp.com/api/v1'
     });
   
     this.initializeApp();

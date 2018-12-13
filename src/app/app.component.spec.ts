@@ -1,7 +1,7 @@
-import { MyApp } from './app.component'
-import { TestBed } from '@angular/core/testing'
+import { MyApp } from './app.component';
+import { TestBed, async, inject } from '@angular/core/testing';
 import { IonicModule, Platform } from 'ionic-angular';
-import { PlatformMock, StatusBarMock, SplashScreenMock } from 'ionic-mocks'
+import { PlatformMock, StatusBarMock, SplashScreenMock } from 'ionic-mocks';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { Http, BaseRequestOptions, RequestMethod } from '@angular/http'
@@ -17,32 +17,34 @@ describe('AppComponent', () => {
     userType: String
   };
 
-  beforeEach(() =>  {
-    TestBed.configureTestingModule({
-      declarations: [
-          MyApp
-        ],
-        imports: [
-          IonicModule.forRoot(MyApp)
-        ],
-        providers: [
-          BaseRequestOptions,
-          MockBackend,
-          { provide: Http, useFactory: (MockBackend, defaultOptions) => {
-              return new Http(backend, defaultOptions)
-            },
-            deps: [MockBackend, BaseRequestOptions]
-          },
-          { provide: Platform, useFactory: () => PlatformMock.instance() },
-          { provide: StatusBar, useFactory: () => StatusBarMock.instance() },
-          { provide: SplashScreen, useFactory: () => SplashScreenMock.instance() },
-          Angular2TokenService
-        ]
-      });
+  beforeEach(() => {
 
-      fixture = TestBed.createComponent(MyApp);
-      component = fixture.componentInstance;
-  })
+    TestBed.configureTestingModule({
+      declarations: [MyApp],
+      imports: [
+        IonicModule.forRoot(MyApp)
+      ],
+      providers: [
+        BaseRequestOptions,
+        MockBackend,
+        {
+          provide: Http,
+          useFactory: (backend, defaultOptions) => {
+            return new Http(backend, defaultOptions)
+          },
+          deps: [MockBackend, BaseRequestOptions]
+        },
+        { provide: Platform, useFactory: () => PlatformMock.instance() },
+        { provide: StatusBar, useFactory: () => StatusBarMock.instance() },
+        { provide: SplashScreen, useFactory: () => SplashScreenMock.instance() },
+        Angular2TokenService
+      ]
+    });
+
+    fixture = TestBed.createComponent(MyApp);
+    component = fixture.componentInstance;
+  });
+
 
   it('should create the app', () => {
     expect(component).toBeTruthy();
@@ -55,7 +57,7 @@ describe('AppComponent', () => {
       c => {
         expect(c.request.getBody()).toEqual(JSON.stringify(signInData));
         expect(c.request.method).toEqual(RequestMethod.Post);
-        expect(c.request.url).toEqual('https://your-cooper-api.herokuapp.com/api/v1/auth/sign_in');
+        expect(c.request.url).toEqual('https://mysterious-island-55175.herokuapp.com/api/v1/auth/sign_in');
       }
     );
 
@@ -67,11 +69,22 @@ describe('AppComponent', () => {
     mockBackend.connections.subscribe(
       c => {
         expect(c.request.method).toEqual(RequestMethod.Delete);
-        expect(c.request.url).toEqual('https://your-cooper-api.herokuapp.com/api/v1/auth/sign_out');
+        expect(c.request.url).toEqual('https://mysterious-island-55175.herokuapp.com/api/v1/auth/sign_out');
+      }
+    );
+
+    component.logout();
+  }));
+
+  it('signUp method', inject([Angular2TokenService, MockBackend], (tokenService, mockBackend) => {
+
+    mockBackend.connections.subscribe(
+      c => {
+        expect(c.request.method).toEqual(RequestMethod.Post);
+        expect(c.request.url).toEqual('https://mysterious-island-55175.herokuapp.com/api/v1/auth/sign_up');
       }
     );
 
     component.logout();
   }));
 });
-})
